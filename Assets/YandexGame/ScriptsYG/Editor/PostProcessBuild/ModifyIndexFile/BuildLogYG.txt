@@ -1,2 +1,0 @@
-Build path: C:/Users/Zver/Desktop/Unity Project/Drone_Slayer/Build
-Build number: 65
