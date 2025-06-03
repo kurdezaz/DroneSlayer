@@ -1,12 +1,12 @@
 using System;
+using DroneSlayer.PlayerEntity;
+using DroneSlayer.UI.Menu.Buttons.WeaponButtons;
+using DroneSlayer.UI.Menu.Descriptions;
+using DroneSlayer.WeaponEntity;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using YG;
-using DroneSlayer.PlayerEntity;
-using DroneSlayer.WeaponEntity;
-using DroneSlayer.UI.Menu.Descriptions;
-using DroneSlayer.UI.Menu.Buttons;
-using DroneSlayer.UI.Menu.Buttons.WeaponButtons;
 
 namespace DroneSlayer.Game
 {
@@ -14,7 +14,7 @@ namespace DroneSlayer.Game
     {
         [SerializeField] private WeaponHand _weaponHand;
         [SerializeField] private Wallet _wallet;
-        [SerializeField] private BuyButton _buyButton;
+        [SerializeField] private Button _buyButton;
         [SerializeField] private WM1911Button _wM1911Button;
         [SerializeField] private WUziButton _wUziButton;
         [SerializeField] private WBenneliM4Button _wBenneliM4Button;
@@ -31,33 +31,34 @@ namespace DroneSlayer.Game
 
         private TextMeshProUGUI _textDescriptionWeaponType;
 
-        public WeaponTypes WeaponType => _weaponType;
-
         public event Action<WeaponTypes> WeaponChanged;
+
         public event Action WeaponEquiped;
+
+        public WeaponTypes WeaponType => _weaponType;
 
         private void OnEnable()
         {
             Init();
 
-            _buyButton.ButtonClicked += OnBuyButtonClick;
-            _wM1911Button.ButtonClicked += OnWM1911ButtonClick;
-            _wUziButton.ButtonClicked += OnWUziButtonClick;
-            _wBenneliM4Button.ButtonClicked += OnWBenneliM4ButtonClick;
-            _wAK74Button.ButtonClicked += OnWAK74ButtonClick;
-            _wM249Button.ButtonClicked += OnWM249ButtonClick;
-            _wRPG7Button.ButtonClicked += OnWRPG7ButtonClick;
+            _buyButton.onClick.AddListener(OnBuyButtonClick);
+            _wM1911Button.onClick.AddListener(OnWM1911ButtonClick);
+            _wUziButton.onClick.AddListener(OnWUziButtonClick);
+            _wBenneliM4Button.onClick.AddListener(OnWBenneliM4ButtonClick);
+            _wAK74Button.onClick.AddListener(OnWAK74ButtonClick);
+            _wM249Button.onClick.AddListener(OnWM249ButtonClick);
+            _wRPG7Button.onClick.AddListener(OnWRPG7ButtonClick);
         }
 
         private void OnDisable()
         {
-            _buyButton.ButtonClicked -= OnBuyButtonClick;
-            _wM1911Button.ButtonClicked -= OnWM1911ButtonClick;
-            _wUziButton.ButtonClicked -= OnWUziButtonClick;
-            _wBenneliM4Button.ButtonClicked -= OnWBenneliM4ButtonClick;
-            _wAK74Button.ButtonClicked -= OnWAK74ButtonClick;
-            _wM249Button.ButtonClicked -= OnWM249ButtonClick;
-            _wRPG7Button.ButtonClicked -= OnWRPG7ButtonClick;
+            _buyButton.onClick.RemoveListener(OnBuyButtonClick);
+            _wM1911Button.onClick.RemoveListener(OnWM1911ButtonClick);
+            _wUziButton.onClick.RemoveListener(OnWUziButtonClick);
+            _wBenneliM4Button.onClick.RemoveListener(OnWBenneliM4ButtonClick);
+            _wAK74Button.onClick.RemoveListener(OnWAK74ButtonClick);
+            _wM249Button.onClick.RemoveListener(OnWM249ButtonClick);
+            _wRPG7Button.onClick.RemoveListener(OnWRPG7ButtonClick);
         }
 
         private void Awake()
@@ -75,7 +76,7 @@ namespace DroneSlayer.Game
 
         private void Init()
         {
-            _textDescriptionWeaponType.text = "";
+            _textDescriptionWeaponType.text = " ";
         }
 
         private void OnBuyButtonClick()
@@ -111,44 +112,32 @@ namespace DroneSlayer.Game
 
         private void OnWM1911ButtonClick()
         {
-            _soundWeaponButton.Play();
-            _weaponType = WeaponTypes.M1911;
-            WriteButtonStats(_wM1911Button);
+            OnWeaponButtonClick(_wM1911Button.WeaponTypes, _wM1911Button);
         }
 
         private void OnWUziButtonClick()
         {
-            _soundWeaponButton.Play();
-            _weaponType = WeaponTypes.Uzi;
-            WriteButtonStats(_wUziButton);
+            OnWeaponButtonClick(_wUziButton.WeaponTypes, _wUziButton);
         }
 
         private void OnWBenneliM4ButtonClick()
         {
-            _soundWeaponButton.Play();
-            _weaponType = WeaponTypes.Bennelli_M4;
-            WriteButtonStats(_wBenneliM4Button);
+            OnWeaponButtonClick(_wBenneliM4Button.WeaponTypes, _wBenneliM4Button);
         }
 
         private void OnWAK74ButtonClick()
         {
-            _soundWeaponButton.Play();
-            _weaponType = WeaponTypes.AK74;
-            WriteButtonStats(_wAK74Button);
+            OnWeaponButtonClick(_wAK74Button.WeaponTypes, _wAK74Button);
         }
 
         private void OnWM249ButtonClick()
         {
-            _soundWeaponButton.Play();
-            _weaponType = WeaponTypes.M249;
-            WriteButtonStats(_wM249Button);
+            OnWeaponButtonClick(_wM249Button.WeaponTypes, _wM249Button);
         }
 
         private void OnWRPG7ButtonClick()
         {
-            _soundWeaponButton.Play();
-            _weaponType = WeaponTypes.RPG7;
-            WriteButtonStats(_wRPG7Button);
+            OnWeaponButtonClick(_wRPG7Button.WeaponTypes, _wRPG7Button);
         }
 
         private void SaveWeaponTypes()
@@ -156,14 +145,21 @@ namespace DroneSlayer.Game
             YandexGame.savesData.weaponTypes = _weaponType;
         }
 
-        private void WriteButtonStats(Buttons buttons)
+        private void OnWeaponButtonClick(WeaponTypes weaponTypes, Button button)
         {
-            _textDescriptionWeaponType.text = GetInfoButton(buttons, 0).text;
+            _soundEquipWeaponButton.Play();
+            _weaponType = weaponTypes;
+            WriteButtonStats(button);
         }
 
-        private TextMeshProUGUI GetInfoButton(Buttons buttons, int nuberChild)
+        private void WriteButtonStats(Button button)
         {
-            return buttons.gameObject.transform.GetChild(nuberChild).GetComponent<TextMeshProUGUI>();
+            _textDescriptionWeaponType.text = GetInfoButton(button, 0).text;
+        }
+
+        private TextMeshProUGUI GetInfoButton(Button button, int nuberChild)
+        {
+            return button.gameObject.transform.GetChild(nuberChild).GetComponent<TextMeshProUGUI>();
         }
     }
 }

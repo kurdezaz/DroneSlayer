@@ -567,11 +567,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df033d7c357d01e47a69f612b2a3ee73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyAttacked: {fileID: 142021891968178683}
+  _attackedEffect: {fileID: 142021891968178683}
+  _explosive: {fileID: 7703489306096101623, guid: d114eb54983d4cd43a79c9eef75eac1c, type: 3}
+  _enemyTypes: 1
   _expirienceOnDied: 10
   _health: 100
   _damage: 15
-  _explosive: {fileID: -1848555809410772658, guid: d114eb54983d4cd43a79c9eef75eac1c, type: 3}
   _cashAward: 20
   _score: 2
 --- !u!135 &3182109194711367473

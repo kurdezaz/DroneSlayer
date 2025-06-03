@@ -1,6 +1,6 @@
+using DroneSlayer.Game;
 using UnityEngine;
 using YG;
-using DroneSlayer.Game;
 
 namespace DroneSlayer.WeaponEntity
 {

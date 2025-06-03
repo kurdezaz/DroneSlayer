@@ -1,13 +1,13 @@
-using UnityEngine;
 using DroneSlayer.PlayerEntity.PlayerSkill;
+using UnityEngine;
 
 namespace DroneSlayer.PlayerEntity
 {
     public class PlayerLeadership : MonoBehaviour
     {
         [SerializeField] private PlayerSkills _playerSkills;
-        [SerializeField] private PlayerHelper _playerHelper1;
-        [SerializeField] private PlayerHelper _playerHelper2;
+        [SerializeField] private GameObject _playerHelper1;
+        [SerializeField] private GameObject _playerHelper2;
 
         private void OnEnable()
         {

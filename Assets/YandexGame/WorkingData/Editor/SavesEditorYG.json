@@ -1,5 +1,5 @@
 {
-  "idSave": 4,
+  "idSave": 9,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -14,5 +14,23 @@
   "health": 1000.0,
   "playerLevel": 1,
   "playerExpirience": 0.0,
-  "score": 0
+  "score": 0,
+  "skillPoints": 1,
+  "isSold": [
+    true,
+    false,
+    false,
+    false,
+    false,
+    false
+  ],
+  "weaponTypes": 0,
+  "skills": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ]
 }

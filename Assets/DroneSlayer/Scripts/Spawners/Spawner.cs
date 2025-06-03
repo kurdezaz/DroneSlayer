@@ -1,27 +1,32 @@
 using System.Collections.Generic;
-using UnityEngine;
 using DroneSlayer.Pools;
+using UnityEngine;
 
 namespace DroneSlayer.Spawners
 {
-    public class Spawner<T> : MonoBehaviour where T : MonoBehaviour
+    public class Spawner<T> : MonoBehaviour
+        where T : MonoBehaviour
     {
-        public ObjectPool<T> _objectPool;
+        [SerializeField] protected List<T> _prefabArray;
 
-        public T Spawn(T prefab)
+        protected List<ObjectPool<T>> _objectPool = new List<ObjectPool<T>>();
+
+        public void Init(T prefab)
         {
-            T instance = Instantiate(prefab);
-            return instance;
+            _objectPool.Add(new ObjectPool<T>(prefab));
         }
 
-        public T GetObject(Queue<T> objects, T objectPrefab)
+        protected T GetObject(T enemy)
         {
-            if (objects.Count == 0)
+            for (int i = 0; i < _objectPool.Count; i++)
             {
-                return Spawn(objectPrefab);
+                if (_objectPool[i].GetPrefab() == enemy)
+                {
+                    return _objectPool[i].GetObject();
+                }
             }
 
-            return _objectPool.GetObject();
+            return null;
         }
     }
 }

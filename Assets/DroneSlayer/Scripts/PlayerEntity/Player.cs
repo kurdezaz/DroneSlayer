@@ -9,6 +9,10 @@ namespace DroneSlayer.PlayerEntity
         private float _constantExpirience = 0;
         private float _modifiedExpirience = 50f;
 
+        public event Action ExpChanged;
+
+        public event Action SkillPointsChanged;
+
         public int PlayerLevel { get; private set; } = 1;
         public float Expirience { get; private set; } = 0;
         public float MinExpirience { get; private set; } = 0;
@@ -16,10 +20,6 @@ namespace DroneSlayer.PlayerEntity
         public int CurrentSkillPoints { get; private set; } = 1;
 
         public int MaxSkillPoints => PlayerLevel;
-
-        public event Action ExpChanged;
-        public event Action LvlChanged;
-        public event Action SkillPointsChanged;
 
         private void Awake()
         {
@@ -30,7 +30,6 @@ namespace DroneSlayer.PlayerEntity
         {
             PlayerLevel = YandexGame.savesData.playerLevel;
             CurrentSkillPoints = YandexGame.savesData.skillPoints;
-            LvlChanged?.Invoke();
         }
 
         public void LoadPlayerExpirience()
@@ -53,7 +52,6 @@ namespace DroneSlayer.PlayerEntity
                 MaxExpirience = MaxExpCalculate(PlayerLevel);
                 Expirience = 0;
                 YandexGame.savesData.playerExpirience = Expirience;
-                LvlChanged?.Invoke();
             }
 
             ExpChanged?.Invoke();

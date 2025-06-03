@@ -1,6 +1,6 @@
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 namespace DroneSlayer.UI.Menu.Sliders
 {
@@ -12,11 +12,11 @@ namespace DroneSlayer.UI.Menu.Sliders
 
         private float _coefficient = 20;
 
-        enum TypeVolumes
+        public enum TypeVolumes
         {
             MasterVolume = 0,
             MusicVolume,
-            EffectsVolume
+            EffectsVolume,
         }
 
         private void OnEnable()

@@ -19,8 +19,6 @@ namespace DroneSlayer.PlayerEntity
 
         private void Update()
         {
-
-
             if (Mathf.Abs(_playerInput.PlayerMovement) > 0)
             {
                 _animator.SetBool(IsAttack, false);

@@ -8,10 +8,9 @@ namespace DroneSlayer.WeaponEntity
         private float _flightSpeed = 5f;
         private float _bulletSpread = 0;
 
-        public float Damage { get; private set; } = 50;
-
         public event Action<Bullet> DiedEvent;
 
+        public float Damage { get; private set; } = 50;
 
         private void Update()
         {

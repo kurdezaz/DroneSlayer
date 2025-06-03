@@ -1,7 +1,7 @@
 using System.Collections;
+using DroneSlayer.PlayerEntity;
 using UnityEngine;
 using UnityEngine.UI;
-using DroneSlayer.PlayerEntity;
 
 namespace DroneSlayer.UI
 {

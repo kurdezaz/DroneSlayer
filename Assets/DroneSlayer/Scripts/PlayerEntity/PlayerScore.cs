@@ -8,9 +8,9 @@ namespace DroneSlayer.PlayerEntity
     {
         private long _score;
 
-        public long Score => _score;
-
         public event Action ScoreChanged;
+
+        public long Score => _score;
 
         public void GainScore(long score)
         {

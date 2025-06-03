@@ -1,8 +1,9 @@
+using UnityEngine;
 using YG;
 
 namespace DroneSlayer.UI.Menu.Buttons
 {
-    public class LeaderboardButton : Buttons
+    public class LeaderboardButton : MonoBehaviour
     {
         private void Awake()
         {

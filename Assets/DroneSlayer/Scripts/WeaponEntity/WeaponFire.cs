@@ -4,6 +4,5 @@ namespace DroneSlayer.WeaponEntity
 {
     public class WeaponFire : MonoBehaviour
     {
-
     }
 }

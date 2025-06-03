@@ -1,14 +1,14 @@
 using System;
-using YG;
 using UnityEngine;
+using YG;
 
 namespace DroneSlayer.PlayerEntity
 {
     public class Wallet : MonoBehaviour
     {
-        public float Money { get; private set; }
-
         public event Action MoneyChanged;
+
+        public float Money { get; private set; }
 
         public void GetMoney(float money)
         {

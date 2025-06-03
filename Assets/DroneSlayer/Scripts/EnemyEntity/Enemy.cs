@@ -1,17 +1,17 @@
 using System;
 using System.Collections;
-using UnityEngine;
 using DroneSlayer.PlayerEntity;
-using DroneSlayer.Effects;
 using DroneSlayer.WeaponEntity;
+using UnityEngine;
 
 namespace DroneSlayer.EnemyEntity
 {
     public class Enemy : MonoBehaviour
     {
-        [SerializeField] private EnemyAttacked _enemyAttacked;
-        [SerializeField] private ExplosiveDrone _explosive;
+        [SerializeField] private AttackedEffect _attackedEffect;
+        [SerializeField] private GameObject _explosive;
 
+        [SerializeField] private EnemyTypes _enemyTypes;
         [SerializeField] private float _expirienceOnDied;
         [SerializeField] private float _health = 100;
         [SerializeField] private float _damage = 10;
@@ -29,17 +29,21 @@ namespace DroneSlayer.EnemyEntity
         private float _minHealth = 0;
         private float _baseHealth = 100f;
         private float _hpCoefficient = 0.1f;
+        private int _numerInArray = 0;
+
+        public event Action<Enemy> DroneDied;
+
+        public event Action<float> HealthChanged;
 
         public int CashAward => _cashAward;
         public float MinHealth => _minHealth;
         public float MaxHealth => _health;
         public float Health => _currentHealth;
         public bool IsDied => _isDied;
+        public EnemyTypes EnemyTypes => _enemyTypes;
+        public int NumberInArray => _numerInArray;
 
         public bool IsCleared { get; private set; } = false;
-
-        public event Action<Enemy> DiedEventDrone;
-        public event Action<float> HealthChanged;
 
         private void OnEnable()
         {
@@ -49,7 +53,7 @@ namespace DroneSlayer.EnemyEntity
 
         private void OnDisable()
         {
-            _enemyAttacked.ChangeColorStandart();
+            _attackedEffect.ChangeColorStandart();
         }
 
         private void Awake()
@@ -70,22 +74,22 @@ namespace DroneSlayer.EnemyEntity
 
                 if (_isDied != true)
                 {
-                    StartCoroutine(EffectTakeDamage());
+                    StartCoroutine(TakeDamageEffect());
                 }
                 else
                 {
                     _player.GainExpirience(_expirienceOnDied);
                     _playerScore.GainScore(_score);
-                    Death();
+                    Die();
 
-                    DiedEventDrone?.Invoke(this);
+                    DroneDied?.Invoke(this);
                 }
             }
 
-            if (other.gameObject.TryGetComponent(out DroneWall droneWall))
+            if (other.gameObject.TryGetComponent(out DeadDroneZone deadDroneZone))
             {
                 _playerHealth.TakeDamage(_damage);
-                DiedEventDrone?.Invoke(this);
+                DroneDied?.Invoke(this);
             }
         }
 
@@ -102,7 +106,6 @@ namespace DroneSlayer.EnemyEntity
             _player = player;
             _playerHealth = health;
             _playerScore = score;
-            _player.LvlChanged += ClearDrone;
 
             ChangeHealth();
             _currentHealth = _health;
@@ -123,7 +126,7 @@ namespace DroneSlayer.EnemyEntity
             }
         }
 
-        public void Death()
+        public void Die()
         {
             var explosion = Instantiate(_explosive);
             explosion.transform.position = transform.position;
@@ -135,29 +138,15 @@ namespace DroneSlayer.EnemyEntity
             _health += _health * _hpCoefficient * _player.PlayerLevel;
         }
 
-        private void ClearDrone()
-        {
-            if (_player.PlayerLevel % 1 == 0 && gameObject.activeSelf)
-            {
-                _isDied = true;
-                Death();
-                _player.LvlChanged -= ClearDrone;
-                IsCleared = true;
-                DiedEventDrone?.Invoke(this);
-            }
-
-
-        }
-
-        private IEnumerator EffectTakeDamage()
+        private IEnumerator TakeDamageEffect()
         {
             if (enabled)
             {
                 float timeDelay = _timeToTakeDamage;
                 var wait = new WaitForSeconds(timeDelay);
-                _enemyAttacked.ChangeColorWhite();
+                _attackedEffect.ChangeColorWhite();
                 yield return wait;
-                _enemyAttacked.ChangeColorStandart();
+                _attackedEffect.ChangeColorStandart();
             }
         }
     }

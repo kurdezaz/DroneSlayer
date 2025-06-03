@@ -4,9 +4,9 @@ namespace DroneSlayer.PlayerEntity
 {
     public class PlayerInput : MonoBehaviour
     {
-        [SerializeField] private DynamicJoystick _dynamicJoystick;
-
         private const string Horizontal = "Horizontal";
+
+        [SerializeField] private DynamicJoystick _dynamicJoystick;
 
         public float PlayerMovement { get; private set; }
 

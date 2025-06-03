@@ -1,6 +1,6 @@
+using DroneSlayer.PlayerEntity;
 using TMPro;
 using UnityEngine;
-using DroneSlayer.PlayerEntity;
 
 namespace DroneSlayer.UI
 {

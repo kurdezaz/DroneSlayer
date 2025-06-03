@@ -7,6 +7,6 @@ namespace DroneSlayer.PlayerEntity.PlayerSkill
         Capacity,
         MoveSpeed,
         Leadership,
-        Trade
+        Trade,
     }
 }

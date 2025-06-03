@@ -1018,11 +1018,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df033d7c357d01e47a69f612b2a3ee73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyAttacked: {fileID: 4031285810534970788}
+  _attackedEffect: {fileID: 4031285810534970788}
+  _explosive: {fileID: 7703489306096101623, guid: d114eb54983d4cd43a79c9eef75eac1c, type: 3}
+  _enemyTypes: 3
   _expirienceOnDied: 40
   _health: 1000
   _damage: 40
-  _explosive: {fileID: -1848555809410772658, guid: d114eb54983d4cd43a79c9eef75eac1c, type: 3}
   _cashAward: 80
   _score: 5
 --- !u!135 &4287093051971412201

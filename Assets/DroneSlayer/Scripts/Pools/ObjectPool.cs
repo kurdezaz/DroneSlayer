@@ -3,18 +3,28 @@ using UnityEngine;
 
 namespace DroneSlayer.Pools
 {
-    public class ObjectPool<T> : MonoBehaviour where T : MonoBehaviour
+    public class ObjectPool<T>
+        where T : MonoBehaviour
     {
         private Queue<T> _objects;
+        private T _prefab;
 
-        private void Awake()
+        public ObjectPool(T prefab)
         {
+            _prefab = prefab;
             _objects = new Queue<T>();
         }
 
+        public T Prefab => _prefab;
+
         public T GetObject()
         {
-            return _objects.Dequeue();
+            if (_objects.Count != 0)
+            {
+                return _objects.Dequeue();
+            }
+
+            return Object.Instantiate(_prefab);
         }
 
         public void PutObject(T objectPrefab)
@@ -22,16 +32,9 @@ namespace DroneSlayer.Pools
             _objects.Enqueue(objectPrefab);
         }
 
-        public void FillEnemyData(T[] enemies)
+        public T GetPrefab()
         {
-            _objects.Clear();
-
-            for (int i = 0; i < enemies.Length; i++)
-            {
-                T enemy = Instantiate(enemies[i]);
-                enemy.gameObject.SetActive(false);
-                _objects.Enqueue(enemy);
-            }
+            return _prefab;
         }
 
         public void InitQueue()

@@ -1,6 +1,6 @@
+using DroneSlayer.PlayerEntity.PlayerSkill;
 using UnityEngine;
 using UnityEngine.UI;
-using DroneSlayer.PlayerEntity.PlayerSkill;
 
 namespace DroneSlayer.UI
 {

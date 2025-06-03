@@ -1,13 +1,12 @@
 using System.Collections;
-using UnityEngine;
 using DroneSlayer.PlayerEntity.PlayerSkill;
 using DroneSlayer.WeaponEntity;
+using UnityEngine;
 
 namespace DroneSlayer.Spawners
 {
-    public class CubeSpawner : Spawner<Bullet>
+    public class BulletSpawner : Spawner<Bullet>
     {
-        [SerializeField] private Bullet _bulletPrefab;
         [SerializeField] private PlayerSkills _playerSkills;
 
         [SerializeField] private float _bulletDamage;
@@ -23,6 +22,7 @@ namespace DroneSlayer.Spawners
         private float _baseBulletDamage;
         private int _baseBulletCapacity;
         private float _baseReloadTime;
+        private int _numberPrefabBullet = 0;
 
         private void OnEnable()
         {
@@ -46,9 +46,17 @@ namespace DroneSlayer.Spawners
 
         private void Awake()
         {
+            Init(_prefabArray[_numberPrefabBullet]);
             _baseBulletDamage = _bulletDamage;
             _baseBulletCapacity = _bulletCapacity;
             _baseReloadTime = _reloadTime;
+        }
+
+        public void PutBullet(Bullet bulletPrefab)
+        {
+            bulletPrefab.DiedEvent -= PutBullet;
+            bulletPrefab.gameObject.SetActive(false);
+            _objectPool[_numberPrefabBullet].PutObject(bulletPrefab);
         }
 
         private IEnumerator SpawnBullets()
@@ -77,16 +85,9 @@ namespace DroneSlayer.Spawners
 
         private void CreateBullet()
         {
-            Bullet bullet = GetObject(_objectPool.ReturnQueue(), _bulletPrefab);
+            Bullet bullet = GetObject(_prefabArray[_numberPrefabBullet]);
             bullet.Init(transform.position, _bulletDamage, _bulletSpread);
             bullet.DiedEvent += PutBullet;
-        }
-
-        public void PutBullet(Bullet bulletPrefab)
-        {
-            bulletPrefab.DiedEvent -= PutBullet;
-            bulletPrefab.gameObject.SetActive(false);
-            _objectPool.PutObject(bulletPrefab);
         }
 
         private void ChangeDamage()

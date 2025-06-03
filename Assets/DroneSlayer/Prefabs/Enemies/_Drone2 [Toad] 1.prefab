@@ -945,7 +945,7 @@ Transform:
   m_GameObject: {fileID: 8202588106708733603}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 8.007132, y: 0.7399993, z: -1.5259806}
+  m_LocalPosition: {x: -7, y: 2.63, z: -2.8664856}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1056,11 +1056,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df033d7c357d01e47a69f612b2a3ee73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyAttacked: {fileID: 2645244092527546304}
-  _explosive: {fileID: -1848555809410772658, guid: d114eb54983d4cd43a79c9eef75eac1c, type: 3}
+  _attackedEffect: {fileID: 2645244092527546304}
+  _explosive: {fileID: 7703489306096101623, guid: d114eb54983d4cd43a79c9eef75eac1c, type: 3}
+  _enemyTypes: 6
   _expirienceOnDied: 100
   _health: 5000
-  _damage: 250
+  _damage: 120
   _cashAward: 140
   _score: 40
 --- !u!135 &5851878100100910510

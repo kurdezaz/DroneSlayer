@@ -1,18 +1,18 @@
-using TMPro;
-using YG;
-using UnityEngine;
 using DroneSlayer.PlayerEntity;
 using DroneSlayer.PlayerEntity.PlayerSkill;
-using DroneSlayer.UI.Menu.Descriptions;
-using DroneSlayer.UI.Menu.Buttons;
 using DroneSlayer.UI.Menu.Buttons.SkillButtons;
+using DroneSlayer.UI.Menu.Descriptions;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using YG;
 
 namespace DroneSlayer.Game
 {
     public class Skills : MonoBehaviour
     {
-        [SerializeField] private UpgradeButton _upgradeButton;
-        [SerializeField] private ResetSkillsButton _resetSkillsButton;
+        [SerializeField] private Button _upgradeButton;
+        [SerializeField] private Button _resetSkillsButton;
         [SerializeField] private SDamageButton _sDamageButton;
         [SerializeField] private SReloadSpeedButton _sReloadSpeedButton;
         [SerializeField] private SCapacityButton _sCapacityButton;
@@ -37,26 +37,26 @@ namespace DroneSlayer.Game
         {
             Init();
 
-            _sDamageButton.ButtonClicked += OnSDamageButtonClick;
-            _sReloadSpeedButton.ButtonClicked += OnSReloadSpeedButtonClick;
-            _sCapacityButton.ButtonClicked += OnSCapacityButtonClick;
-            _sMoveSpeedButton.ButtonClicked += OnSMoveSpeedButtonClick;
-            _sLeadershipButton.ButtonClicked += OnSLeadershipButtonClick;
-            _sTradeButton.ButtonClicked += OnSTradeButtonClick;
-            _upgradeButton.ButtonClicked += OnUpgradeButtonClick;
-            _resetSkillsButton.ButtonClicked += OnResetButtonClick;
+            _sDamageButton.onClick.AddListener(OnSDamageButtonClick);
+            _sReloadSpeedButton.onClick.AddListener(OnSReloadSpeedButtonClick);
+            _sCapacityButton.onClick.AddListener(OnSCapacityButtonClick);
+            _sMoveSpeedButton.onClick.AddListener(OnSMoveSpeedButtonClick);
+            _sLeadershipButton.onClick.AddListener(OnSLeadershipButtonClick);
+            _sTradeButton.onClick.AddListener(OnSTradeButtonClick);
+            _upgradeButton.onClick.AddListener(OnUpgradeButtonClick);
+            _resetSkillsButton.onClick.AddListener(OnResetButtonClick);
         }
 
         private void OnDisable()
         {
-            _sDamageButton.ButtonClicked -= OnSDamageButtonClick;
-            _sReloadSpeedButton.ButtonClicked -= OnSReloadSpeedButtonClick;
-            _sCapacityButton.ButtonClicked -= OnSCapacityButtonClick;
-            _sMoveSpeedButton.ButtonClicked -= OnSMoveSpeedButtonClick;
-            _sLeadershipButton.ButtonClicked -= OnSLeadershipButtonClick;
-            _sTradeButton.ButtonClicked -= OnSTradeButtonClick;
-            _upgradeButton.ButtonClicked -= OnUpgradeButtonClick;
-            _resetSkillsButton.ButtonClicked -= OnResetButtonClick;
+            _sDamageButton.onClick.RemoveListener(OnSDamageButtonClick);
+            _sReloadSpeedButton.onClick.RemoveListener(OnSReloadSpeedButtonClick);
+            _sCapacityButton.onClick.RemoveListener(OnSCapacityButtonClick);
+            _sMoveSpeedButton.onClick.RemoveListener(OnSMoveSpeedButtonClick);
+            _sLeadershipButton.onClick.RemoveListener(OnSLeadershipButtonClick);
+            _sTradeButton.onClick.RemoveListener(OnSTradeButtonClick);
+            _upgradeButton.onClick.RemoveListener(OnUpgradeButtonClick);
+            _resetSkillsButton.onClick.RemoveListener(OnResetButtonClick);
         }
 
         private void Awake()
@@ -67,8 +67,8 @@ namespace DroneSlayer.Game
 
         private void Init()
         {
-            _textNameStats.text = "";
-            _textDescriptionStats.text = "";
+            _textNameStats.text = " ";
+            _textDescriptionStats.text = " ";
         }
 
         private void OnUpgradeButtonClick()
@@ -96,55 +96,50 @@ namespace DroneSlayer.Game
 
         private void OnSDamageButtonClick()
         {
-            _soundChoosePerk.Play();
-            _stats = Stats.Damage;
-            WriteButtonStats(_sDamageButton);
+            OnSkillButtonClick(_sDamageButton.StatsTypes, _sDamageButton);
         }
 
         private void OnSReloadSpeedButtonClick()
         {
-            _soundChoosePerk.Play();
-            _stats = Stats.ReloadSpeed;
-            WriteButtonStats(_sReloadSpeedButton);
+            OnSkillButtonClick(_sReloadSpeedButton.StatsTypes, _sReloadSpeedButton);
         }
 
         private void OnSCapacityButtonClick()
         {
-            _soundChoosePerk.Play();
-            _stats = Stats.Capacity;
-            WriteButtonStats(_sCapacityButton);
+            OnSkillButtonClick(_sCapacityButton.StatsTypes, _sCapacityButton);
         }
 
         private void OnSMoveSpeedButtonClick()
         {
-            _soundChoosePerk.Play();
-            _stats = Stats.MoveSpeed;
-            WriteButtonStats(_sMoveSpeedButton);
+            OnSkillButtonClick(_sMoveSpeedButton.StatsTypes, _sMoveSpeedButton);
         }
 
         private void OnSLeadershipButtonClick()
         {
-            _soundChoosePerk.Play();
-            _stats = Stats.Leadership;
-            WriteButtonStats(_sLeadershipButton);
+            OnSkillButtonClick(_sLeadershipButton.StatsTypes, _sLeadershipButton);
         }
 
         private void OnSTradeButtonClick()
         {
+            OnSkillButtonClick(_sTradeButton.StatsTypes, _sTradeButton);
+        }
+
+        private void OnSkillButtonClick(Stats stats, Button button)
+        {
             _soundChoosePerk.Play();
-            _stats = Stats.Trade;
-            WriteButtonStats(_sTradeButton);
+            _stats = stats;
+            WriteButtonStats(button);
         }
 
-        private void WriteButtonStats(Buttons buttons)
+        private void WriteButtonStats(Button button)
         {
-            _textNameStats.text = GetInfoButton(buttons, 0).text;
-            _textDescriptionStats.text = GetInfoButton(buttons, 1).text;
+            _textNameStats.text = GetInfoButton(button, 0).text;
+            _textDescriptionStats.text = GetInfoButton(button, 1).text;
         }
 
-        private TextMeshProUGUI GetInfoButton(Buttons buttons, int nuberChild)
+        private TextMeshProUGUI GetInfoButton(Button button, int nuberChild)
         {
-            return buttons.gameObject.transform.GetChild(nuberChild).GetComponent<TextMeshProUGUI>();
+            return button.gameObject.transform.GetChild(nuberChild).GetComponent<TextMeshProUGUI>();
         }
     }
 }

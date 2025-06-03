@@ -1,7 +1,7 @@
 using System;
+using DroneSlayer.WeaponEntity;
 using UnityEngine;
 using YG;
-using DroneSlayer.WeaponEntity;
 
 namespace DroneSlayer.PlayerEntity.PlayerSkill
 {
@@ -28,32 +28,29 @@ namespace DroneSlayer.PlayerEntity.PlayerSkill
             {
                 skill.UpgradeLevel();
 
-                if (skill.Names == Stats.Leadership)
+                switch (skill.Names)
                 {
-                    LeadershipSkillChanged?.Invoke(skill.Level);
-                }
-                else if (skill.Names == Stats.MoveSpeed)
-                {
-                    MoveSpeedChanged?.Invoke(skill);
-                }
-                else if (skill.Names == Stats.Trade)
-                {
-                    foreach (var weapon in _weapons)
-                    {
-                        weapon.ChangePrice(skill);
-                    }
-                }
-                else if (skill.Names == Stats.Damage)
-                {
-                    DamageChanged?.Invoke();
-                }
-                else if (skill.Names == Stats.Capacity)
-                {
-                    CapacityChanged?.Invoke();
-                }
-                else if (skill.Names == Stats.ReloadSpeed)
-                {
-                    ReloadChanged?.Invoke();
+                    case Stats.Leadership:
+                        LeadershipSkillChanged?.Invoke(skill.Level);
+                        break;
+                    case Stats.MoveSpeed:
+                        MoveSpeedChanged?.Invoke(skill);
+                        break;
+                    case Stats.Trade:
+                        foreach (var weapon in _weapons)
+                        {
+                            weapon.ChangePrice(skill);
+                        }
+                        break;
+                    case Stats.Damage:
+                        DamageChanged?.Invoke();
+                        break;
+                    case Stats.Capacity:
+                        CapacityChanged?.Invoke();
+                        break;
+                    case Stats.ReloadSpeed:
+                        ReloadChanged?.Invoke();
+                        break;
                 }
             }
         }
@@ -100,32 +97,29 @@ namespace DroneSlayer.PlayerEntity.PlayerSkill
 
         private void UpdateSkill(int number)
         {
-            if (_skills[number].Names == Stats.Leadership)
+            switch (_skills[number].Names)
             {
-                LeadershipSkillChanged?.Invoke(_skills[number].Level);
-            }
-            else if (_skills[number].Names == Stats.MoveSpeed)
-            {
-                MoveSpeedChanged?.Invoke(_skills[number]);
-            }
-            else if (_skills[number].Names == Stats.Trade)
-            {
-                foreach (var weapon in _weapons)
-                {
-                    weapon.ChangePrice(_skills[number]);
-                }
-            }
-            else if (_skills[number].Names == Stats.Damage)
-            {
-                DamageChanged?.Invoke();
-            }
-            else if (_skills[number].Names == Stats.Capacity)
-            {
-                CapacityChanged?.Invoke();
-            }
-            else if (_skills[number].Names == Stats.ReloadSpeed)
-            {
-                ReloadChanged?.Invoke();
+                case Stats.Leadership:
+                    LeadershipSkillChanged?.Invoke(_skills[number].Level);
+                    break;
+                case Stats.MoveSpeed:
+                    MoveSpeedChanged?.Invoke(_skills[number]);
+                    break;
+                case Stats.Trade:
+                    foreach (var weapon in _weapons)
+                    {
+                        weapon.ChangePrice(_skills[number]);
+                    }
+                    break;
+                case Stats.Damage:
+                    DamageChanged?.Invoke();
+                    break;
+                case Stats.Capacity:
+                    CapacityChanged?.Invoke();
+                    break;
+                case Stats.ReloadSpeed:
+                    ReloadChanged?.Invoke();
+                    break;
             }
         }
     }

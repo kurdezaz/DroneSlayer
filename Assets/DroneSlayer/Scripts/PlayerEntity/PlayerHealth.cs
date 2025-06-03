@@ -1,6 +1,6 @@
 using System;
-using YG;
 using UnityEngine;
+using YG;
 
 namespace DroneSlayer.PlayerEntity
 {
@@ -9,12 +9,13 @@ namespace DroneSlayer.PlayerEntity
         [SerializeField] private PlayerScore _playerScore;
         [SerializeField] private float _maxHealth;
 
+        public event Action PlayerHealthChanged;
+
+        public event Action PlayerDeathReached;
+
         public float Health { get; private set; } = 1;
         public float MinHealth { get; private set; } = 0;
         public float MaxHealth => _maxHealth;
-
-        public event Action PlayerHealthChanged;
-        public event Action PlayerDeathReached;
 
         public void TakeDamage(float damage)
         {
@@ -31,14 +32,7 @@ namespace DroneSlayer.PlayerEntity
 
         public void LoadHealth()
         {
-            if (YandexGame.savesData.health <= 0)
-            {
-                Health = _maxHealth;
-            }
-            else
-            {
-                Health = YandexGame.savesData.health;
-            }
+            Health = (YandexGame.savesData.health <= 0) ? _maxHealth : YandexGame.savesData.health;
         }
     }
 }

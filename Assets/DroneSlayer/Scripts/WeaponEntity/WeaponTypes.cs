@@ -7,6 +7,6 @@ namespace DroneSlayer.WeaponEntity
         Bennelli_M4,
         AK74,
         M249,
-        RPG7
+        RPG7,
     }
 }
