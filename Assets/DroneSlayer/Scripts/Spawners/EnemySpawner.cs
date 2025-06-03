@@ -1,6 +1,7 @@
 using System.Collections;
 using DroneSlayer.EnemyEntity;
 using DroneSlayer.PlayerEntity;
+using DroneSlayer.ScriptableObjects;
 using UnityEngine;
 
 namespace DroneSlayer.Spawners
