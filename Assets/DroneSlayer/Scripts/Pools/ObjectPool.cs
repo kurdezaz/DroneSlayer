@@ -36,15 +36,5 @@ namespace DroneSlayer.Pools
         {
             return _prefab;
         }
-
-        public void InitQueue()
-        {
-            _objects = new Queue<T>();
-        }
-
-        public Queue<T> ReturnQueue()
-        {
-            return _objects;
-        }
     }
 }
