@@ -13,12 +13,12 @@ namespace DroneSlayer.Game
     {
         [SerializeField] private Button _upgradeButton;
         [SerializeField] private Button _resetSkillsButton;
-        [SerializeField] private SDamageButton _sDamageButton;
-        [SerializeField] private SReloadSpeedButton _sReloadSpeedButton;
-        [SerializeField] private SCapacityButton _sCapacityButton;
-        [SerializeField] private SMoveSpeedButton _sMoveSpeedButton;
-        [SerializeField] private SLeadershipButton _sLeadershipButton;
-        [SerializeField] private STradeButton _sTradeButton;
+        [SerializeField] private SkillStatButtonHandler _sDamageButton;
+        [SerializeField] private SkillStatButtonHandler _sReloadSpeedButton;
+        [SerializeField] private SkillStatButtonHandler _sCapacityButton;
+        [SerializeField] private SkillStatButtonHandler _sMoveSpeedButton;
+        [SerializeField] private SkillStatButtonHandler _sLeadershipButton;
+        [SerializeField] private SkillStatButtonHandler _sTradeButton;
         [SerializeField] private NameStats _nameStats;
         [SerializeField] private DescriptionStats _descriptionStats;
 
@@ -37,24 +37,26 @@ namespace DroneSlayer.Game
         {
             Init();
 
-            _sDamageButton.onClick.AddListener(OnSDamageButtonClick);
-            _sReloadSpeedButton.onClick.AddListener(OnSReloadSpeedButtonClick);
-            _sCapacityButton.onClick.AddListener(OnSCapacityButtonClick);
-            _sMoveSpeedButton.onClick.AddListener(OnSMoveSpeedButtonClick);
-            _sLeadershipButton.onClick.AddListener(OnSLeadershipButtonClick);
-            _sTradeButton.onClick.AddListener(OnSTradeButtonClick);
+            _sDamageButton.Clicked += OnSkillButtonClick;
+            _sReloadSpeedButton.Clicked += OnSkillButtonClick;
+            _sCapacityButton.Clicked += OnSkillButtonClick;
+            _sMoveSpeedButton.Clicked += OnSkillButtonClick;
+            _sLeadershipButton.Clicked += OnSkillButtonClick;
+            _sTradeButton.Clicked += OnSkillButtonClick;
+
             _upgradeButton.onClick.AddListener(OnUpgradeButtonClick);
             _resetSkillsButton.onClick.AddListener(OnResetButtonClick);
         }
 
         private void OnDisable()
         {
-            _sDamageButton.onClick.RemoveListener(OnSDamageButtonClick);
-            _sReloadSpeedButton.onClick.RemoveListener(OnSReloadSpeedButtonClick);
-            _sCapacityButton.onClick.RemoveListener(OnSCapacityButtonClick);
-            _sMoveSpeedButton.onClick.RemoveListener(OnSMoveSpeedButtonClick);
-            _sLeadershipButton.onClick.RemoveListener(OnSLeadershipButtonClick);
-            _sTradeButton.onClick.RemoveListener(OnSTradeButtonClick);
+            _sDamageButton.Clicked -= OnSkillButtonClick;
+            _sReloadSpeedButton.Clicked -= OnSkillButtonClick;
+            _sCapacityButton.Clicked -= OnSkillButtonClick;
+            _sMoveSpeedButton.Clicked -= OnSkillButtonClick;
+            _sLeadershipButton.Clicked -= OnSkillButtonClick;
+            _sTradeButton.Clicked -= OnSkillButtonClick;
+
             _upgradeButton.onClick.RemoveListener(OnUpgradeButtonClick);
             _resetSkillsButton.onClick.RemoveListener(OnResetButtonClick);
         }
@@ -94,37 +96,7 @@ namespace DroneSlayer.Game
             _playerSkills.SaveSkills();
         }
 
-        private void OnSDamageButtonClick()
-        {
-            OnSkillButtonClick(_sDamageButton.StatsTypes, _sDamageButton);
-        }
-
-        private void OnSReloadSpeedButtonClick()
-        {
-            OnSkillButtonClick(_sReloadSpeedButton.StatsTypes, _sReloadSpeedButton);
-        }
-
-        private void OnSCapacityButtonClick()
-        {
-            OnSkillButtonClick(_sCapacityButton.StatsTypes, _sCapacityButton);
-        }
-
-        private void OnSMoveSpeedButtonClick()
-        {
-            OnSkillButtonClick(_sMoveSpeedButton.StatsTypes, _sMoveSpeedButton);
-        }
-
-        private void OnSLeadershipButtonClick()
-        {
-            OnSkillButtonClick(_sLeadershipButton.StatsTypes, _sLeadershipButton);
-        }
-
-        private void OnSTradeButtonClick()
-        {
-            OnSkillButtonClick(_sTradeButton.StatsTypes, _sTradeButton);
-        }
-
-        private void OnSkillButtonClick(Stats stats, Button button)
+        private void OnSkillButtonClick(Stats stats,Button button)
         {
             _soundChoosePerk.Play();
             _stats = stats;

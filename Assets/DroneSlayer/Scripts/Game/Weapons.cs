@@ -15,12 +15,12 @@ namespace DroneSlayer.Game
         [SerializeField] private WeaponHand _weaponHand;
         [SerializeField] private Wallet _wallet;
         [SerializeField] private Button _buyButton;
-        [SerializeField] private WM1911Button _wM1911Button;
-        [SerializeField] private WUziButton _wUziButton;
-        [SerializeField] private WBenneliM4Button _wBenneliM4Button;
-        [SerializeField] private WAK74Button _wAK74Button;
-        [SerializeField] private WM249Button _wM249Button;
-        [SerializeField] private WRPG7Button _wRPG7Button;
+        [SerializeField] private WeaponTypeButtonHandler _wM1911Button;
+        [SerializeField] private WeaponTypeButtonHandler _wUziButton;
+        [SerializeField] private WeaponTypeButtonHandler _wBenneliM4Button;
+        [SerializeField] private WeaponTypeButtonHandler _wAK74Button;
+        [SerializeField] private WeaponTypeButtonHandler _wM249Button;
+        [SerializeField] private WeaponTypeButtonHandler _wRPG7Button;
 
         [SerializeField] private DescriptionStats _descriptionStats;
 
@@ -42,23 +42,23 @@ namespace DroneSlayer.Game
             Init();
 
             _buyButton.onClick.AddListener(OnBuyButtonClick);
-            _wM1911Button.onClick.AddListener(OnWM1911ButtonClick);
-            _wUziButton.onClick.AddListener(OnWUziButtonClick);
-            _wBenneliM4Button.onClick.AddListener(OnWBenneliM4ButtonClick);
-            _wAK74Button.onClick.AddListener(OnWAK74ButtonClick);
-            _wM249Button.onClick.AddListener(OnWM249ButtonClick);
-            _wRPG7Button.onClick.AddListener(OnWRPG7ButtonClick);
+            _wM1911Button.Clicked += OnWeaponButtonClick;
+            _wUziButton.Clicked += OnWeaponButtonClick;
+            _wBenneliM4Button.Clicked += OnWeaponButtonClick;
+            _wAK74Button.Clicked += OnWeaponButtonClick;
+            _wM249Button.Clicked += OnWeaponButtonClick;
+            _wRPG7Button.Clicked += OnWeaponButtonClick;
         }
 
         private void OnDisable()
         {
             _buyButton.onClick.RemoveListener(OnBuyButtonClick);
-            _wM1911Button.onClick.RemoveListener(OnWM1911ButtonClick);
-            _wUziButton.onClick.RemoveListener(OnWUziButtonClick);
-            _wBenneliM4Button.onClick.RemoveListener(OnWBenneliM4ButtonClick);
-            _wAK74Button.onClick.RemoveListener(OnWAK74ButtonClick);
-            _wM249Button.onClick.RemoveListener(OnWM249ButtonClick);
-            _wRPG7Button.onClick.RemoveListener(OnWRPG7ButtonClick);
+            _wM1911Button.Clicked -= OnWeaponButtonClick;
+            _wUziButton.Clicked -= OnWeaponButtonClick;
+            _wBenneliM4Button.Clicked -= OnWeaponButtonClick;
+            _wAK74Button.Clicked -= OnWeaponButtonClick;
+            _wM249Button.Clicked -= OnWeaponButtonClick;
+            _wRPG7Button.Clicked -= OnWeaponButtonClick;
         }
 
         private void Awake()
@@ -108,36 +108,6 @@ namespace DroneSlayer.Game
             }
 
             YandexGame.SaveLocal();
-        }
-
-        private void OnWM1911ButtonClick()
-        {
-            OnWeaponButtonClick(_wM1911Button.WeaponTypes, _wM1911Button);
-        }
-
-        private void OnWUziButtonClick()
-        {
-            OnWeaponButtonClick(_wUziButton.WeaponTypes, _wUziButton);
-        }
-
-        private void OnWBenneliM4ButtonClick()
-        {
-            OnWeaponButtonClick(_wBenneliM4Button.WeaponTypes, _wBenneliM4Button);
-        }
-
-        private void OnWAK74ButtonClick()
-        {
-            OnWeaponButtonClick(_wAK74Button.WeaponTypes, _wAK74Button);
-        }
-
-        private void OnWM249ButtonClick()
-        {
-            OnWeaponButtonClick(_wM249Button.WeaponTypes, _wM249Button);
-        }
-
-        private void OnWRPG7ButtonClick()
-        {
-            OnWeaponButtonClick(_wRPG7Button.WeaponTypes, _wRPG7Button);
         }
 
         private void SaveWeaponTypes()
